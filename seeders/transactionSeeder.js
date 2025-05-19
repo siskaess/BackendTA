@@ -1,0 +1,256 @@
+const mongoose = require("mongoose");
+const Transaction = require("../models/Transaction");
+require("dotenv").config();
+
+const transactions = [
+  {
+    transactionId: "0000000001",
+    user: "clr@gmail.com",
+    location: "Jl. Kutai No. 12",
+    products: ["H6c PRO", "Micro-SD Card 64GB", "Bracket Dome OEM"],
+    installationService: true,
+    qty: [1, 1, 1, 1],
+    prices: [295000, 98000, 18000, 200000],
+    totalPrice: 611000,
+    date: new Date("2025-02-27"),
+    status: "done",
+  },
+  {
+    transactionId: "0000000002",
+    user: "clr@gmail.com",
+    location: "Jl. Kutai No. 12",
+    products: [
+      "Camera EZVIZ H6C PRO 2MP",
+      "Micro SD Sandisk Ultra 64GB",
+      "Bracket Dome OEM",
+    ],
+    installationService: true,
+    qty: [1, 1, 1, 1],
+    prices: [295000, 98000, 18000, 200000],
+    totalPrice: 611000,
+    date: new Date("2025-02-28"),
+    status: "done",
+  },
+  {
+    transactionId: "0000000003",
+    user: "slamet@gmail.com",
+    location: "Apartemen Laguna Blok A-21 No. 72",
+    products: [
+      "CAMERA EZVIZ H8C 4G 3MP",
+      "Kabel Listrik",
+      "Klem 10mm",
+      "Steker UTICON",
+      "Stopkontak LB 1 UTC",
+      "Bracket Dome OEM",
+    ],
+    installationService: true,
+    qty: [1, 5, 1, 1, 1, 1, 1],
+    prices: [899000, 10000, 25000, 10000, 12000, 18000, 250000],
+    totalPrice: 1145000,
+    date: new Date("2025-03-03"),
+    status: "done",
+  },
+  {
+    transactionId: "0000000004",
+    user: "mirrizky@gmail.com",
+    location: "Jl. Raya Tenggilis No. 25",
+    products: [
+      "CAMERA H8C 4MP",
+      "SD Card V-GEN 128GB",
+      "Stop Kontak LB 1 UTC",
+      "Steker UTICON",
+      "Kabel Listrik",
+      "Klem 10mm",
+    ],
+    installationService: true,
+    qty: [1, 1, 1, 1, 5, 1, 1],
+    prices: [670000, 170000, 12000, 10000, 10000, 25000, 200000],
+    totalPrice: 1137000,
+    date: new Date("2025-03-11"),
+    status: "done",
+  },
+  {
+    transactionId: "0000000005",
+    user: "mirrizky@gmail.com",
+    location: "Jl. Raya Tenggilis No. 25",
+    products: [
+      "EZVIZ C6N 4MP",
+      "SD Card V-GEN 128GB",
+      "Stop Kontak LB 1 UTC",
+      "Steker UTICON",
+      "Kabel Listrik",
+    ],
+    installationService: true,
+    qty: [1, 1, 1, 1, 5, 1],
+    prices: [425000, 170000, 12000, 10000, 10000, 200000],
+    totalPrice: 867000,
+    date: new Date("2025-03-11"),
+    status: "done",
+  },
+  {
+    transactionId: "0000000006",
+    user: "mirrizky@gmail.com",
+    location: "Jl. Raya Tenggilis No. 25",
+    products: [
+      "EZVIZ C6N 4MP",
+      "SD Card V-GEN 128GB",
+      "Stop Kontak LB 1 UTC",
+      "Steker UTICON",
+      "Kabel Listrik",
+    ],
+    installationService: true,
+    qty: [1, 1, 1, 1, 5, 1],
+    prices: [425000, 170000, 12000, 10000, 10000, 200000],
+    totalPrice: 867000,
+    date: new Date("2025-03-12"),
+    status: "done",
+  },
+  {
+    transactionId: "0000000007",
+    user: "mirrizky@gmail.com",
+    location: "Jl. Raya Tenggilis No. 25",
+    products: [
+      "EZVIZ C6N 4MP",
+      "SD Card V-GEN 128GB",
+      "Stop Kontak LB 1 UTC",
+      "Steker UTICON",
+      "Kabel Listrik",
+    ],
+    installationService: true,
+    qty: [1, 1, 1, 1, 5, 1],
+    prices: [425000, 170000, 12000, 10000, 10000, 200000],
+    totalPrice: 867000,
+    date: new Date("2025-03-12"),
+    status: "done",
+  },
+  {
+    transactionId: "0000000008",
+    user: "heti@gmail.com",
+    location: "Jl. Bendul Merisi Utara V No. 16",
+    products: ["H8C", "MICRO SD CARD 128GB", "Steker UTICON", "Kabel Listrik"],
+    installationService: true,
+    qty: [1, 1, 1, 5, 1],
+    prices: [589000, 219000, 10000, 10000, 200000],
+    totalPrice: 1068000,
+    date: new Date("2025-03-13"),
+    status: "done",
+  },
+  {
+    transactionId: "0000000009",
+    user: "heti@gmail.com",
+    location: "Jl. Bendul Merisi Utara V No. 16",
+    products: ["C6N", "MICRO SD CARD 128GB", "Steker UTICON", "Kabel Listrik"],
+    installationService: true,
+    qty: [1, 1, 1, 5, 1],
+    prices: [329000, 219000, 10000, 10000, 200000],
+    totalPrice: 808000,
+    date: new Date("2025-03-13"),
+    status: "done",
+  },
+  {
+    transactionId: "0000000010",
+    user: "heti@gmail.com",
+    location: "Jl. Bendul Merisi Utara V No. 16",
+    products: ["C6N", "MICRO SD CARD 128GB", "Steker UTICON", "Kabel Listrik"],
+    installationService: true,
+    qty: [1, 1, 1, 5, 1],
+    prices: [329000, 219000, 10000, 10000, 200000],
+    totalPrice: 808000,
+    date: new Date("2025-03-13"),
+    status: "done",
+  },
+  {
+    transactionId: "0000000011",
+    user: "peppy@gmail.com",
+    location: "Perumahan The Osso, Cluster The Trust D55",
+    products: [
+      "CAMERA H8C 4MP",
+      "MICRO SD SANDISK ULTRA 128GB",
+      "Kabel Listrik",
+      "Steker UTICON",
+    ],
+    installationService: true,
+    qty: [1, 1, 6, 1, 1],
+    prices: [670000, 219000, 10000, 10000, 200000],
+    totalPrice: 1159000,
+    date: new Date("2025-03-14"),
+    status: "done",
+  },
+  {
+    transactionId: "0000000012",
+    user: "santi@gmail.com",
+    location: "Jl. Raya Semolowaru Ruko Araya 2 Blok J1 No. 11",
+    products: [
+      "CAMERA IMOU RANGER 2 3MP",
+      "Kabel Ecer Dahua CAT 6 PFM922I-6UN-C",
+      "Switch RUIJIE RG-ES05G-L",
+      "Kabel Listrik",
+      "Stop Kontak LB 1 UTC",
+      "Stop Kontak T UTICON SC-38",
+      "T DUS",
+      "KLEM 10mm",
+      "Pin RJ45 BELDEN CAT 5",
+    ],
+    installationService: true,
+    qty: [1, 5, 1, 5, 1, 1, 1, 1, 3, 1],
+    prices: [
+      300000, 5000, 185000, 10000, 12000, 30000, 15000, 25000, 5000, 200000,
+    ],
+    totalPrice: 857000,
+    date: new Date("2025-03-14"),
+    status: "done",
+  },
+  {
+    transactionId: "0000000013",
+    user: "santi@gmail.com",
+    location: "Jl. Raya Semolowaru Ruko Araya 2 Blok J1 No. 11",
+    products: [
+      "CAMERA IMOU RANGER 2 3MP",
+      "Kabel Ecer Dahua CAT 6 PFM922I-6UN-C",
+      "Kabel Listrik",
+      "Stop Kontak LB 1 UTC",
+      "Pin RJ45 BELDEN CAT 5",
+    ],
+    installationService: true,
+    qty: [1, 5, 5, 1, 3, 1],
+    prices: [300000, 5000, 10000, 12000, 5000, 200000],
+    totalPrice: 602000,
+    date: new Date("2025-03-14"),
+    status: "done",
+  },
+  {
+    transactionId: "0000000014",
+    user: "christine@gmail.com",
+    location: "International Village 2 Blok H11 No. 3",
+    products: [
+      "CAMERA EZVIZ H6C PRO 4MP",
+      "SD CARD V-GEN 128GB",
+      "Bracket Dome OEM",
+    ],
+    installationService: true,
+    qty: [1, 1, 1, 1],
+    prices: [489000, 170000, 18000, 200000],
+    totalPrice: 877000,
+    date: new Date("2025-03-24"),
+    status: "done",
+  },
+];
+
+const seedTransactions = async () => {
+  try {
+    console.log(process.env);
+
+    await mongoose.connect(process.env.MONGODB_URL_DEV_TEST);
+
+    await Transaction.deleteMany({});
+    const createdTransactions = await Transaction.insertMany(transactions);
+    console.log("Transactions seeded successfully:", createdTransactions);
+  } catch (error) {
+    console.error("Error seeding transactions:", error);
+    process.exit(1);
+  } finally {
+    await mongoose.connection.close();
+  }
+};
+
+seedTransactions();
