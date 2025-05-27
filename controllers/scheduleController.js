@@ -156,7 +156,13 @@ const createReport = async (req, res) => {
     if (!schedule) {
       return res.status(404).json({ message: "Schedule not found" });
     }
-    schedule.report = req.file.path;
+
+    if (req.file) {
+      const baseUrl = `${req.protocol}://${req.get("host")}`;
+      const profileImageUrl = `${baseUrl}/uploads/${req.file.filename}`;
+      schedule.report = profileImageUrl;
+    }
+
     schedule.status = "done";
     if (req.body.additionalInfo) {
       schedule.additionalInfo = req.body.additionalInfo;
